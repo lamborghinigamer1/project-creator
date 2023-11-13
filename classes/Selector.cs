@@ -164,6 +164,8 @@ namespace ProjectCreator
                     newc.Initialize();
                     break;
                 case "cs":
+                case "csharp":
+                case "c#":
                     var newcsharp = new NewCSharp()
                     {
                         ProjectName = projectname,
