@@ -28,6 +28,7 @@ namespace ProjectCreator
 
         public override void CreateDirectory()
         {
+            ProjectName = ProjectName.Replace(' ', '-');
             string command = $"dotnet new console -n \"{ProjectName}\"";
 
             Process? process = null;

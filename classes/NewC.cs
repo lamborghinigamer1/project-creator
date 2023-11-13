@@ -29,6 +29,8 @@ namespace ProjectCreator
 
         public override void CreateDirectory()
         {
+            ProjectName = ProjectName.Replace(' ', '-');
+            
             string command = $"mkdir \"{ProjectName}\"";
 
             Process? process = null;
