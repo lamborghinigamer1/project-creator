@@ -28,7 +28,7 @@ namespace ProjectCreator
 
         public override void CreateDirectory()
         {
-            string command = $"dotnet new console -n {ProjectName}";
+            string command = $"dotnet new console -n \"{ProjectName}\"";
 
             Process? process = null;
 

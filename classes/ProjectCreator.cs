@@ -56,7 +56,7 @@ namespace ProjectCreator
         {
             if (OpenCode)
             {
-                string command = $"code {ProjectName}";
+                string command = $"code " + Path.Combine("\".", $"{ProjectName}\"");
 
                 Process? process = null;
 

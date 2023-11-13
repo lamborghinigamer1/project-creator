@@ -28,13 +28,15 @@ namespace ProjectCreator
         public override void CreateDirectory()
         {
             string command;
+            ProjectName = ProjectName.Replace(' ', '_');
+
             if (InitializeGitRepo)
             {
-                command = $"cargo new {ProjectName.ToLower()}";
+                command = $"cargo new \"{ProjectName.ToLower()}\"";
             }
             else
             {
-                command = $"cargo new {ProjectName.ToLower()} --vcs none";
+                command = $"cargo new \"{ProjectName.ToLower()}\" --vcs none";
             }
 
             Process? process = null;

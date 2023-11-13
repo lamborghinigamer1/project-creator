@@ -29,7 +29,7 @@ namespace ProjectCreator
 
         public override void CreateDirectory()
         {
-            string command = $"mkdir {ProjectName}";
+            string command = $"mkdir \"{ProjectName}\"";
 
             Process? process = null;
 
