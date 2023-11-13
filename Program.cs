@@ -13,13 +13,9 @@
             {
                 if (userOS != null)
                 {
-                    log.Debug($"Operating System Information: {userOS}");
-                    var newc = new NewC()
-                    {
-                        ProjectName = "Juan",
-                        OS = userOS
-                    };
-                    newc.Initialize();
+                    var selector = new Selector(userOS);
+                    log.Info("Successfully created project");
+                    Console.WriteLine("Successfully created project");
                 }
                 else
                 {

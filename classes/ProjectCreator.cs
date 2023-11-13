@@ -7,14 +7,16 @@ namespace ProjectCreator
         private readonly Logger log;
 
         public required string ProjectName
-        {
-            get; set;
-        }
+        { get; set; }
+
+        public bool OpenCode
+        { set; get; } = false;
+
+        public bool InitializeGitRepo
+        { set; get; } = true;
 
         public required OperatingSystem OS
-        {
-            get; set;
-        }
+        { get; set; }
 
         public ProjectCreator()
         {
@@ -23,78 +25,84 @@ namespace ProjectCreator
 
         public void InitializeGit()
         {
-            log.Info("Using bash to initialize git");
-            var gitinit = new ProcessStartInfo
+            if (InitializeGitRepo)
             {
-                FileName = "git",
-                RedirectStandardInput = true,
-                RedirectStandardOutput = true,
-                UseShellExecute = false,
-                CreateNoWindow = true,
-                WorkingDirectory = Path.Combine(".", ProjectName),
-                Arguments = "init"
-            };
+                log.Info("Using bash to initialize git");
+                var gitinit = new ProcessStartInfo
+                {
+                    FileName = "git",
+                    RedirectStandardInput = true,
+                    RedirectStandardOutput = true,
+                    UseShellExecute = false,
+                    CreateNoWindow = true,
+                    WorkingDirectory = Path.Combine(".", ProjectName),
+                    Arguments = "init"
+                };
 
-            Process? process = new()
-            {
-                StartInfo = gitinit
-            };
+                Process? process = new()
+                {
+                    StartInfo = gitinit
+                };
 
-            if (process != null)
-            {
-                process.Start();
-                process.WaitForExit();
+                if (process != null)
+                {
+                    process.Start();
+                    process.WaitForExit();
+                }
             }
         }
 
         public void StartCode()
         {
-            string command = $"code {ProjectName}";
-
-            Process? process = null;
-
-            switch (OS.Platform)
+            if (OpenCode)
             {
-                case PlatformID.Unix:
-                    log.Info("Starting vscode using bash");
-                    var startcodeUnix = new ProcessStartInfo
-                    {
-                        FileName = "/bin/bash",
-                        RedirectStandardInput = true,
-                        RedirectStandardOutput = true,
-                        UseShellExecute = false,
-                        CreateNoWindow = true,
-                        Arguments = $"-c \"{command}\""
-                    };
+                string command = $"code {ProjectName}";
 
-                    process = new Process()
-                    {
-                        StartInfo = startcodeUnix
-                    };
-                    break;
-                case PlatformID.Win32NT:
-                    log.Info("Starting vscode using cmd");
-                    var startcodeWin = new ProcessStartInfo
-                    {
-                        FileName = "cmd.exe",
-                        RedirectStandardInput = true,
-                        RedirectStandardOutput = true,
-                        UseShellExecute = false,
-                        CreateNoWindow = true,
-                        Arguments = $"/c {command}"
-                    };
+                Process? process = null;
 
-                    process = new Process()
-                    {
-                        StartInfo = startcodeWin
-                    };
-                    break;
-            }
+                switch (OS.Platform)
+                {
+                    case PlatformID.Unix:
+                        log.Info("Starting vscode using bash");
+                        var startcodeUnix = new ProcessStartInfo
+                        {
+                            FileName = "/bin/bash",
+                            RedirectStandardInput = true,
+                            RedirectStandardOutput = true,
+                            UseShellExecute = false,
+                            CreateNoWindow = true,
+                            Arguments = $"-c \"{command}\""
+                        };
 
-            if (process != null)
-            {
-                process.Start();
-                process.WaitForExit();
+                        process = new Process()
+                        {
+                            StartInfo = startcodeUnix
+                        };
+                        break;
+                    case PlatformID.Win32NT:
+                        log.Info("Starting vscode using cmd");
+                        var startcodeWin = new ProcessStartInfo
+                        {
+                            FileName = "cmd.exe",
+                            RedirectStandardInput = true,
+                            RedirectStandardOutput = true,
+                            UseShellExecute = false,
+                            CreateNoWindow = true,
+                            Arguments = $"/c {command}"
+                        };
+
+                        process = new Process()
+                        {
+                            StartInfo = startcodeWin
+                        };
+                        break;
+                }
+
+                if (process != null)
+                {
+                    process.Start();
+                    process.WaitForExit();
+                }
             }
         }
 

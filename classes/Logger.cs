@@ -33,7 +33,7 @@ namespace ProjectCreator
         {
             string finalmessage = $"[{LogWithTime()} {classname} - {level}]: {message}";
 
-            Console.WriteLine(finalmessage);
+            // Console.WriteLine(finalmessage);
 
             LogToFile(finalmessage);
 
@@ -46,7 +46,7 @@ namespace ProjectCreator
 
         public void Debug(string message)
         {
-            Log("Debug", message);
+            Log("DEBUG", message);
         }
 
         public void Info(string message)
