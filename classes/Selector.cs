@@ -105,8 +105,9 @@ namespace ProjectCreator
 
         private string ListProgrammingLanguages()
         {
-            string[] languages = { "Rust", "C#", "C" };
-            string[] alias = { "rs", "cs", "c" };
+            log.Info("Showing all programming languages to user");
+            string[] languages = { "Rust", "C#", "C", "HTML" };
+            string[] alias = { "rs", "cs", "c", "html" };
             string result = "";
 
             for (int i = 0; i < languages.Length; i++)
@@ -174,6 +175,16 @@ namespace ProjectCreator
                         InitializeGitRepo = initializerepo,
                     };
                     newcsharp.Initialize();
+                    break;
+                case "html":
+                    var newhtml = new NewHTML()
+                    {
+                        ProjectName = projectname,
+                        OS = OS,
+                        OpenCode = opencode,
+                        InitializeGitRepo = initializerepo,
+                    };
+                    newhtml.Initialize();
                     break;
                 default:
                     Console.WriteLine("Sorry that programming language is not implemented yet");

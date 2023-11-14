@@ -2,13 +2,13 @@ using System.Diagnostics;
 
 namespace ProjectCreator
 {
-    public class NewC : ProjectCreator
+    public class NewHTML : ProjectCreator
     {
         private readonly Logger log;
 
-        public NewC()
+        public NewHTML()
         {
-            log = new Logger("NewC");
+            log = new Logger("NewHTML");
         }
 
         public void Initialize()
@@ -16,7 +16,7 @@ namespace ProjectCreator
             try
             {
                 CreateDirectory();
-                CreateMainC();
+                CreateIndex();
                 InitializeGit();
                 StartCode();
             }
@@ -30,7 +30,7 @@ namespace ProjectCreator
         public override void CreateDirectory()
         {
             ProjectName = ProjectName.Replace(' ', '-');
-            
+
             string command = $"mkdir \"{ProjectName}\"";
 
             Process? process = null;
@@ -80,23 +80,29 @@ namespace ProjectCreator
             }
         }
 
-        private static string GenerateMainFunction()
+        private static string GenerateIndex()
         {
             return
-                "#include <stdio.h>" + Environment.NewLine + Environment.NewLine +
-                    "int main(int argc, char const *argv[])" + Environment.NewLine +
-                   "{" + Environment.NewLine +
-                   "    printf(\"Hello, World!\\n\");" + Environment.NewLine +
-                   "    return 0;" + Environment.NewLine +
-                   "}";
+            "<!DOCTYPE html>" + Environment.NewLine +
+            "   <html lang=\"en\">" + Environment.NewLine +
+            "   <head>" + Environment.NewLine +
+            "    <meta charset=\"UTF-8\">" + Environment.NewLine +
+            "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">" + Environment.NewLine +
+            "    <title>Document</title>" + Environment.NewLine +
+            "</head>" + Environment.NewLine +
+            "<body>" + Environment.NewLine +
+            Environment.NewLine +
+            "</body>" + Environment.NewLine +
+            "</html>";
         }
-        public void CreateMainC()
+
+        public void CreateIndex()
         {
-            log.Info("Generating main.c file");
-            string filepath = Path.Combine(".", ProjectName, "main.c");
+            log.Info("Generating index.html file");
+            string filepath = Path.Combine(".", ProjectName, "index.html");
             try
             {
-                File.AppendAllText(filepath, GenerateMainFunction());
+                File.AppendAllText(filepath, GenerateIndex());
             }
             catch (IOException e)
             {
